@@ -9,28 +9,31 @@ class GoogleTts::Phrase
   attr_reader :lang
   attr_reader :text
 
-  def initialize(text, lang = :en, file = nil)
+  def initialize(text, lang = :en)
     @text = text
     @lang = lang
-    @file = file
-    @downloaded = false
+    @tempfile_is_downloaded = false
   end
 
   def file
     @file ||= Tempfile.new "tts_#{rand(10**9)}"
     return @file if @downloaded
 
+    save_to_file(@file)
+  end
+
+  def save_to_file(file)
     Net::HTTP.start(URL_HOST) do |http|
-      open(@file.path, "wb") do |f|
+      open(file.path, "wb") do |f|
         chopped_text.each do |part|
           response = http.get(URL_PATH.call(part, lang.to_s))
           f.write(response.body)
         end
       end
     end
-    @downloaded = true
+    @tempfile_is_downloaded ||= file == @file
     
-    @file
+    file
   end
 
   private
