@@ -1,12 +1,14 @@
 # GoogleTts
 
-TODO: Write a gem description
+Ruby gem that provides text-to-speech (tts) functionality in many languages.
+
+This gem is based on https://github.com/pbrazdil/tts_based_on_google gem.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'google_tts'
+    gem 'google_tts', git: 'git@github.com:bloomrain/google_tts.git'
 
 And then execute:
 
@@ -18,7 +20,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Basic example:
+
+    phrase = GoogleTts::Phrase.new("Hell, yeah!", :en)
+    file = phrase.file
+    text = phrase.text
+    language = phrase.language
+
+By default it will save google tts output to tempfile. If you want you can specify output like this:
+	phrase = GoogleTts::Phrase.new( "Hell, yeah!", :en, File.new("uhlala.mp3") )
 
 ## Contributing
 
