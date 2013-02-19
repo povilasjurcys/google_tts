@@ -28,6 +28,7 @@ Basic example:
     language = phrase.language
 
 By default it will save google tts output to tempfile. If you want you can specify output like this:
+
 	phrase = GoogleTts::Phrase.new( "Hell, yeah!", :en, File.new("uhlala.mp3") )
 
 ## Contributing
