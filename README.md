@@ -33,6 +33,23 @@ By default it will save output to tempfile. If you want you can directly save to
 	output = File.new("uhlala.mp3")
 	phrase.save_to_file(output)
 
+If you are going to use this service frequently, google will require to enter captchas. To avoid this situation, I suggest you to connect trough proxies:
+
+    phrase = GoogleTts::Phrase.new("Hell, yeah!", :en, proxy: {ip: "127.0.0.1", port: "80"})
+
+For this purpose you can use proxy_fetcher (https://github.com/bloomrain/proxy_fetcher):
+
+    random_proxy = ProxyFetcher.random_proxy
+    phrase = GoogleTts::Phrase.new("Hell, yeah!", :en, proxy: random_proxy.as_json)
+
+
+    
+
+
+## Limitatios
+
+Google TTS converts only 100 symbols at the time. If you submit text, longer than 100 simbols, output can include short pauses.
+
 ## Contributing
 
 1. Fork it

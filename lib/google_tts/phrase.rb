@@ -9,24 +9,33 @@ class GoogleTts::Phrase
   attr_reader :lang
   attr_reader :text
 
-  def initialize(text, lang = :en)
+  def initialize(text, lang = :en, options = {})
     @text = text
     @lang = lang
     @tempfile_is_downloaded = false
+    if options[:proxy].present?
+      @proxy = OpenStruct.new(options[:proxy])
+    end
   end
 
   def file
-    @file ||= Tempfile.new "tts_#{rand(10**9)}"
+    @file ||= Tempfile.new "tts_#{rand(10**9)}.mpeg"
     return @file if @downloaded
 
     save_to_file(@file)
   end
 
   def save_to_file(file)
-    Net::HTTP.start(URL_HOST) do |http|
+    connection = Net::HTTP
+    connection = Net::HTTP::Proxy(@proxy.ip, @proxy.port) if @proxy.present?
+
+    connection.start(URL_HOST) do |http|
       open(file.path, "wb") do |f|
         chopped_text.each do |part|
           response = http.get(URL_PATH.call(part, lang.to_s))
+          if response.code.to_i != 200
+            raise Exception.new("Probably forbiden access. Got response with code '#{response.code}'")
+          end
           f.write(response.body)
         end
       end

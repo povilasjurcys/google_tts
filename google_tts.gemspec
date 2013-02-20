@@ -6,8 +6,8 @@ require 'google_tts/version'
 Gem::Specification.new do |gem|
   gem.name          = "google_tts"
   gem.version       = GoogleTts::VERSION
-  gem.authors       = ["TODO: Write your name"]
-  gem.email         = ["TODO: Write your email address"]
+  gem.authors       = ["Povilas Jurčys"]
+  gem.email         = ["povilas@d9.lt", "bloomrain@gmail.com"]
   gem.description   = %q{TODO: Write a gem description}
   gem.summary       = %q{TODO: Write a gem summary}
   gem.homepage      = ""
@@ -16,4 +16,6 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+
+  gem.add_dependency "nokogiri"
 end
