@@ -41,14 +41,10 @@ For this purpose you can use proxy_fetcher (https://github.com/bloomrain/proxy_f
 
     random_proxy = ProxyFetcher.random_proxy
     phrase = GoogleTts::Phrase.new("Hell, yeah!", :en, proxy: random_proxy.as_json)
-
-
     
-
-
 ## Limitatios
 
-Google TTS converts only 100 symbols at the time. If you submit text, longer than 100 simbols, output can include short pauses.
+Google TTS converts only 100 symbols at the time. If you submit text longer than 100 simbols, output can include short pauses.
 
 ## Contributing
 
